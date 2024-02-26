@@ -22,7 +22,7 @@ class TeamsTemplateIntTest {
     private final TeamsOperations teamsOperations = new TeamsTemplate(populators);
 
     @Test
-    public void testGenerateTeams() {
+    public void testGenerateThreeTeams() {
         final int teamsSize = 3;
         List<Player> players = TestUtils.loadPlayerData("test-pool-01.csv");
 
@@ -41,6 +41,28 @@ class TeamsTemplateIntTest {
         assertThat(teamGenerationResult.remaining(), notNullValue());
         assertThat(teamGenerationResult.remaining().size(), is(1));
         assertThat(teamGenerationResult.remaining().get(0).id(), is("P61"));
+    }
+
+    @Test
+    public void testGenerateTwoTeams() {
+        final int teamsSize = 2;
+        List<Player> players = TestUtils.loadPlayerData("test-pool-01.csv");
+
+        TeamGenerationResult teamGenerationResult = teamsOperations.generateTeams(players, teamsSize);
+        teamGenerationResult.report();
+
+        assertThat(teamGenerationResult, notNullValue());
+
+        assertThat(teamGenerationResult.teams(), notNullValue());
+        assertThat(teamGenerationResult.teams().size(), is(teamsSize));
+
+        for (Team team : teamGenerationResult.teams()) {
+            assertThat(team.getPlayers().size(), is(9));
+        }
+
+        assertThat(teamGenerationResult.remaining(), notNullValue());
+        assertThat(teamGenerationResult.remaining().size(), is(1));
+        assertThat(teamGenerationResult.remaining().get(0).id(), is("P3"));
     }
 
 
