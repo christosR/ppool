@@ -12,12 +12,15 @@ import java.util.List;
 public record TeamGenerationResult(List<Team> teams, List<Player> remaining) {
 
     public void report() {
+        log.info("----------------------------------------------");
         log.info("Generated {} teams.", teams.size());
 
+        log.info("----------------------------------------------");
         for (Team team : teams) {
             log.info("totalSkill: {} {}", team.totalSkill(), team.getPlayers());
         }
 
+        log.info("----------------------------------------------");
         log.info("Remaining players");
         for (Player player : remaining) {
             log.info(player.toString());
